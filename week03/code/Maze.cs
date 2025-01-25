@@ -1,69 +1,47 @@
-/// <summary>
-/// Defines a maze using a dictionary. The dictionary is provided by the
-/// user when the Maze object is created. The dictionary will contain the
-/// following mapping:
-///
-/// (x,y) : [left, right, up, down]
-///
-/// 'x' and 'y' are integers and represents locations in the maze.
-/// 'left', 'right', 'up', and 'down' are boolean are represent valid directions
-///
-/// If a direction is false, then we can assume there is a wall in that direction.
-/// If a direction is true, then we can proceed.  
-///
-/// If there is a wall, then throw an InvalidOperationException with the message "Can't go that way!".  If there is no wall,
-/// then the 'currX' and 'currY' values should be changed.
-/// </summary>
 public class Maze
 {
-    private readonly Dictionary<ValueTuple<int, int>, bool[]> _mazeMap;
-    private int _currX = 1;
-    private int _currY = 1;
+    private Dictionary<(int, int), (bool left, bool right, bool up, bool down)> maze;
+    private (int x, int y) currentPosition;
 
-    public Maze(Dictionary<ValueTuple<int, int>, bool[]> mazeMap)
+    public Maze(Dictionary<(int, int), (bool, bool, bool, bool)> maze, (int, int) startPosition)
     {
-        _mazeMap = mazeMap;
+        this.maze = maze;
+        this.currentPosition = startPosition;
     }
 
-    // TODO Problem 4 - ADD YOUR CODE HERE
-    /// <summary>
-    /// Check to see if you can move left.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveLeft()
+    public (int x, int y) MoveLeft()
     {
-        // FILL IN CODE
+        if (maze[currentPosition].left)
+        {
+            currentPosition = (currentPosition.x - 1, currentPosition.y);
+        }
+        return currentPosition;
     }
 
-    /// <summary>
-    /// Check to see if you can move right.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveRight()
+    public (int x, int y) MoveRight()
     {
-        // FILL IN CODE
+        if (maze[currentPosition].right)
+        {
+            currentPosition = (currentPosition.x + 1, currentPosition.y);
+        }
+        return currentPosition;
     }
 
-    /// <summary>
-    /// Check to see if you can move up.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveUp()
+    public (int x, int y) MoveUp()
     {
-        // FILL IN CODE
+        if (maze[currentPosition].up)
+        {
+            currentPosition = (currentPosition.x, currentPosition.y + 1);
+        }
+        return currentPosition;
     }
 
-    /// <summary>
-    /// Check to see if you can move down.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveDown()
+    public (int x, int y) MoveDown()
     {
-        // FILL IN CODE
-    }
-
-    public string GetStatus()
-    {
-        return $"Current location (x={_currX}, y={_currY})";
+        if (maze[currentPosition].down)
+        {
+            currentPosition = (currentPosition.x, currentPosition.y - 1);
+        }
+        return currentPosition;
     }
 }
