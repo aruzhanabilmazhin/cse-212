@@ -1,5 +1,4 @@
-﻿// DO NOT MODIFY THIS FILE
-public class Node
+﻿public class Node
 {
     public int Data { get; set; }
     public Node? Next { get; set; }
@@ -7,6 +6,8 @@ public class Node
 
     public Node(int data)
     {
-        this.Data = data;
+        Data = data;
+        Next = null;
+        Prev = null;
     }
 }
